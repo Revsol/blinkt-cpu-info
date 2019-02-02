@@ -9,9 +9,11 @@ import blinkt
 mode = os.environ['Mode']
 if mode not in ['Mixed', 'Temp', 'Load']:
     raise ValueError('Mode not recognized.')
+brightness = float(os.environ['Brightness'])
+interval = float(os.environ['Interval'])
 
 blinkt.set_clear_on_exit()
-blinkt.set_brightness(0.05)
+blinkt.set_brightness(brightness)
 
 
 def get_cpu_temperature():
@@ -52,4 +54,4 @@ while True:
     if mode in ['Mixed', 'Load']:
         load = psutil.cpu_percent() / 100.0
     show_graph(temp, load)
-    time.sleep(0.05)
+    time.sleep(interval)

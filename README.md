@@ -20,6 +20,11 @@ When running the client, the following parameters are available
     * ```-e Mode=Temp``` shows the temperature in red, it is divided in 10°C steps. As example 4 red LEDs means 40°C
     * ```-e Mode=Load``` shows the CPU Load in blue, it is divided by 8(LED count) and represents 12.5%. As example 4 blue LEDs mean 50% CPU Load.
     * ```-e Mode=Mixed``` combines the other 2 modes and mixes the colors as purple.
+* ```-e Brightness=0.05``` sets the brightness of the LEDs from 0.0 to 1.0 (default around 0.05).
+* ```-e Interval=0.05``` sets the interval in which the values are updated (default around 0.05).
+
+All parameters are optional and the default values are used if they are omitted.
+
 
 ![Blinkt!](https://raw.githubusercontent.com/Revsol/blinkt-cpu-info/master/cluster-mixed.gif)
 

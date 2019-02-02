@@ -29,5 +29,7 @@ COPY scripts	scripts
 WORKDIR /root/scripts
 
 ENV Mode="Mixed"
+ENV Brightness="0.05"
+ENV Interval="0.05"
 
 CMD ["python", "cpu_info.py"]
