@@ -3,12 +3,14 @@
 https://shop.pimoroni.com/products/blinkt
 
 # Usage
-The following command runs the Cpu Info Docker container:
+The following command runs the CPU-Info Docker container:
 ```bash
 docker run -d \
     --name blinkt-cpu-info \
     --privileged \
     -e Mode=Mixed \
+    -e Brightness=0.05 \
+    -e Interval=0.05 \
     cisecke/blinkt-cpu-info
 ```
 
