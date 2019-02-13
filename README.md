@@ -1,6 +1,6 @@
 # CPU Temperature and Load shown with Pimoroni Blinkt!
 
-https://shop.pimoroni.com/products/blinkt
+![Blinkt!](https://raw.githubusercontent.com/Revsol/blinkt-cpu-info/master/cluster-mixed.gif)
 
 # Usage
 The following command runs the CPU-Info Docker container:
@@ -8,9 +8,11 @@ The following command runs the CPU-Info Docker container:
 docker run -d \
     --name blinkt-cpu-info \
     --privileged \
+    --restart=unless-stopped \
     -e Mode=Mixed \
     -e Brightness=0.05 \
     -e Interval=0.05 \
+    -e Smooth=True \
     cisecke/blinkt-cpu-info
 ```
 
@@ -24,13 +26,9 @@ When running the client, the following parameters are available
     * ```-e Mode=Mixed``` combines the other 2 modes and mixes the colors as purple.
 * ```-e Brightness=0.05``` sets the brightness of the LEDs from 0.0 to 1.0 (default around 0.05).
 * ```-e Interval=0.05``` sets the interval in which the values are updated (default around 0.05).
+* ```-e Smooth=True``` smoothens the colors of the LEDs, set ```False``` to deactivate (default True).
 
 All parameters are optional and the default values are used if they are omitted.
-
-
-![Blinkt!](https://raw.githubusercontent.com/Revsol/blinkt-cpu-info/master/cluster-mixed.gif)
-
-It's not easy to see in the image, but the white/bright color is purple.
 
 # Future
 * Make the docker image smaller.
@@ -40,3 +38,4 @@ It's not easy to see in the image, but the white/bright color is purple.
 * https://github.com/revsol/blinkt-cpu-info
 * For issues, suggestions or questions just create an Issue on Github.
 * Thanks to [Pimoroni](https://shop.pimoroni.com/) for their great toys.
+* https://shop.pimoroni.com/products/blinkt

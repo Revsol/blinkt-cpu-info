@@ -1,19 +1,31 @@
 #!/usr/bin/env python
 
+import signal
 import os
 import time
 import psutil
 from subprocess import PIPE, Popen
 import blinkt
+import sys
 
 mode = os.environ['Mode']
 if mode not in ['Mixed', 'Temp', 'Load']:
     raise ValueError('Mode not recognized.')
-brightness = float(os.environ['Brightness'])
-interval = float(os.environ['Interval'])
+brightness = min(float(os.environ['Brightness']), 1)
+interval = max(float(os.environ['Interval']), 0)
+smooth = os.environ['Smooth'] == "True"
 
-blinkt.set_clear_on_exit()
 blinkt.set_brightness(brightness)
+running = True
+
+
+def sigterm(x, y):
+    global running
+    running = False
+
+
+# Register the signal to the handler
+signal.signal(signal.SIGTERM, sigterm)
 
 
 def get_cpu_temperature():
@@ -35,9 +47,9 @@ def show_graph(temp, load):
     for x in range(blinkt.NUM_PIXELS):
         r, g, b = 0, 0, 0
         if temp > 0:
-            r = 255
+            r = get_value(temp)
         if load > 0:
-            b = 255
+            b = get_value(load)
 
         blinkt.set_pixel(x, r, g, b)
         temp -= 1
@@ -46,12 +58,34 @@ def show_graph(temp, load):
     blinkt.show()
 
 
-while True:
+def get_value(value):
+    max_value = 255
+    if smooth and value <= 1:
+        return max_value * value
+    else:
+        return max_value
+
+
+def show_info():
     temp = 0
     load = 0
     if mode in ['Mixed', 'Temp']:
-        temp = get_cpu_temperature() / 100
+        temp = get_cpu_temperature() / 100.0
     if mode in ['Mixed', 'Load']:
         load = psutil.cpu_percent() / 100.0
     show_graph(temp, load)
-    time.sleep(interval)
+
+
+if __name__ == '__main__':
+    while True:
+        if running:
+            show_info()
+            time.sleep(interval)
+        else:
+            break
+    # shut off blinkt and exit
+    blinkt.clear()
+    blinkt.show()
+
+
+
