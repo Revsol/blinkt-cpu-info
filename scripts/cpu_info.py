@@ -13,7 +13,8 @@ if mode not in ['Mixed', 'Temp', 'Load']:
     raise ValueError('Mode not recognized.')
 brightness = min(float(os.environ['Brightness']), 1)
 interval = max(float(os.environ['Interval']), 0)
-smooth = os.environ['Smooth'] == "True"
+smooth = os.environ['Smooth'].lower() == "true"
+orientation = os.environ['Orientation']
 
 blinkt.set_brightness(brightness)
 running = True
@@ -44,7 +45,10 @@ def get_cpu_temperature():
 def show_graph(temp, load):
     temp *= blinkt.NUM_PIXELS
     load *= blinkt.NUM_PIXELS
-    for x in range(blinkt.NUM_PIXELS):
+    leds = range(blinkt.NUM_PIXELS)
+    if orientation.lower() == "r2l":
+        leds = reversed(leds)
+    for x in leds:
         r, g, b = 0, 0, 0
         if temp > 0:
             r = get_value(temp)

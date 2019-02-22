@@ -18,6 +18,7 @@ ENV Mode="Mixed"
 ENV Brightness="0.05"
 ENV Interval="0.05"
 ENV Smooth="True"
+ENV Orientation="L2R"
 
 STOPSIGNAL SIGTERM
 
