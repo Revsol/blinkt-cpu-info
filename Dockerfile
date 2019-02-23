@@ -1,14 +1,11 @@
-FROM resin/rpi-raspbian:jessie
+FROM balenalib/rpi-raspbian
 
 RUN apt-get update -qy && apt-get install -y \
     python \
-    python-rpi.gpio
-
-RUN apt-get install -y libraspberrypi-bin
-
-RUN apt-get install python-blinkt
-
-RUN apt-get install python-psutil
+    python-rpi.gpio \
+    -y libraspberrypi-bin \
+    python-blinkt \
+    python-psutil
 
 WORKDIR /root/
 COPY scripts	scripts
