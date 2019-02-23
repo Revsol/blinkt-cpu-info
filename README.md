@@ -13,6 +13,7 @@ docker run -d \
     -e Brightness=0.05 \
     -e Interval=0.05 \
     -e Smooth=True \
+    -e Orientation=L2R \
     cisecke/blinkt-cpu-info
 ```
 
@@ -27,12 +28,17 @@ When running the client, the following parameters are available
 * ```-e Brightness=0.05``` sets the brightness of the LEDs from 0.0 to 1.0 (default around 0.05).
 * ```-e Interval=0.05``` sets the interval in which the values are updated (default around 0.05).
 * ```-e Smooth=True``` smoothens the colors of the LEDs, set ```False``` to deactivate (default True).
+* ```-e Orientation=L2R``` sets the orientation of the LEDs to Left-2-Right (L2R) or Right-2-Left (R2L) (default L2R).
 
 All parameters are optional and the default values are used if they are omitted.
 
 # Future
 * Make the docker image smaller.
 * Show Network usage.
+* Add docker-compose file.
+
+# Changelog:
+* 23-02-2019: Orientation added and base image changed to ```balenalib/rpi-raspbian```
 
 # More Info
 * https://github.com/revsol/blinkt-cpu-info
